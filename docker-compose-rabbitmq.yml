@@ -1,0 +1,19 @@
+version: '2'
+services:
+  rabbitmq:
+    hostname: rabbitmq
+    environment:
+      # RABBITMQ_DEFAULT_VHOST: "XXX"
+      RABBITMQ_DEFAULT_USER: "root"
+      RABBITMQ_DEFAULT_PASS: "123456"
+    image: "rabbitmq:management"
+    container_name: "rabbitMq"
+    restart: always
+    volumes:
+    - "./rabbitmq/data:/usr/local/rabbitMq/data"
+    - "./rabbitmq/log:/usr/local/rabbitMq/log"
+    ports:
+    - "15672:15672"
+    - "4369:4369"
+    - "5672:5672"
+    - "25672:25672"
