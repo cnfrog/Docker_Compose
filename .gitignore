@@ -3,3 +3,4 @@ mysql/datadir/*
 sentinel/*
 log/*
 nginx/log/*
+mongodb/*

@@ -1,0 +1,30 @@
+version: "3"
+services:
+  mqnamesrv:
+    image: apacherocketmq/rocketmq
+    container_name: mqnamesrv
+    ports:
+      - 9876:9876
+    environment:
+      JAVA_OPT: -server -Xms256m -Xmx256m
+      MAX_POSSIBLE_HEAP: 1000000000
+    command: sh mqnamesrv
+  mqbroker:
+    image: apacherocketmq/rocketmq
+    container_name: mqbroker
+    ports:
+      - 10911:10911
+      - 10909:10909
+    volumes:
+      - ./rocketmq/conf/broker.conf:/usr/local/dockerCompose/rocketmq/conf/broker.conf
+    environment:
+      JAVA_OPT_EXT: -server -Xms256m -Xmx256m -Xmn128m
+      NAMESRV_ADDR: mqnamesrv:9876
+    command: sh mqbroker -n mqnamesrv:9876 -c /usr/local/dockerCompose/rocketmq/conf/broker.conf
+  mqconsole:
+    image: styletang/rocketmq-console-ng
+    container_name: mqconsole
+    ports:
+      - 19876:8080
+    environment:
+      JAVA_OPTS: -Drocketmq.namesrv.addr=mqnamesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=falses
