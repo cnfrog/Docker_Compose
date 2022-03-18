@@ -4,3 +4,4 @@ sentinel/*
 log/*
 nginx/log/*
 mongodb/*
+nacos/cluster*
